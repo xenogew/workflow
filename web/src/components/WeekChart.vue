@@ -5,30 +5,41 @@
 </template>
 
 <script setup lang="ts">
-import Chart from 'chart.js'
+import { Chart, type ChartConfiguration } from "chart.js";
+import { ref, onMounted } from "vue";
 
 const props = defineProps({
   chartData: {
-    type: Array,
+    type: Array as () => number[],
     required: true,
   },
-})
+});
+
+const chart = ref<HTMLCanvasElement | null>(null);
 
 onMounted(() => {
-  const config = {
-    type: 'bar',
+  if (!chart.value) {
+    return;
+  }
+  const config: ChartConfiguration = {
+    type: "bar",
     data: {
-      labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
       datasets: [
         {
+          label: "Weekly Data",
           data: props.chartData,
         },
       ],
     },
-  }
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+    },
+  };
 
-  new Chart(props.chartRef, config)
-})
+  new Chart(chart.value, config);
+});
 </script>
 
 <style scoped>
