@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
-import HelloWorld from "./components/HelloWorld.vue";
+import HelloWorld from "@/components/HelloWorld.vue";
+import WeekChart from "@/components/WeekChart.vue";
 </script>
 
 <template>
@@ -18,6 +19,7 @@ import HelloWorld from "./components/HelloWorld.vue";
   </header>
 
   <RouterView />
+  <WeekChart :chart-data="[10, 20, 30, 45, 50, 10, 50]" />
 </template>
 
 <style scoped>

@@ -1,51 +1,19 @@
 <template>
-  <div class="chart-container">
-    <canvas ref="chart"></canvas>
-  </div>
+  <Bar :data="data" :options="options" />
 </template>
 
 <script setup lang="ts">
-import { Chart, type ChartConfiguration } from "chart.js";
-import { ref, onMounted } from "vue";
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from "chart.js";
+import { Bar } from "vue-chartjs";
 
-const props = defineProps({
-  chartData: {
-    type: Array as () => number[],
-    required: true,
-  },
-});
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const chart = ref<HTMLCanvasElement | null>(null);
+const data = {
+  labels: ["January", "February", "March"],
+  datasets: [{ label: "Financial Program", data: [40, 20, 12] }],
+};
 
-onMounted(() => {
-  if (!chart.value) {
-    return;
-  }
-  const config: ChartConfiguration = {
-    type: "bar",
-    data: {
-      labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-      datasets: [
-        {
-          label: "Weekly Data",
-          data: props.chartData,
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-    },
-  };
-
-  new Chart(chart.value, config);
-});
+const options = {
+  responsive: true,
+};
 </script>
-
-<style scoped>
-.chart-container {
-  position: relative;
-  height: 100%;
-  width: 100%;
-}
-</style>
