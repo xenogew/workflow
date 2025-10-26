@@ -18887,18 +18887,36 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "WeekChart",
   setup(__props) {
     Chart$1.register(CategoryScale, LinearScale, BarElement, plugin_title, plugin_tooltip, plugin_legend);
-    const data = {
-      labels: ["January", "February", "March"],
-      datasets: [{ data: [40, 20, 12] }]
-    };
     const options = {
       responsive: true
     };
+    const apiData = ref({ datasets: [], labels: [] });
+    const isLoading = ref(false);
+    const error = ref({ message: "" });
+    const fetchData = async () => {
+      isLoading.value = true;
+      try {
+        const response = await fetch("/api/chart/data");
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        apiData.value = await response.json();
+      } catch (err) {
+        if (err instanceof Error) {
+          error.value = { message: err.message };
+        }
+      } finally {
+        isLoading.value = false;
+      }
+    };
+    onMounted(() => {
+      fetchData();
+    });
     return (_ctx, _cache) => {
       return openBlock(), createBlock(unref(Bar), {
-        data,
+        data: apiData.value,
         options
-      });
+      }, null, 8, ["data"]);
     };
   }
 });

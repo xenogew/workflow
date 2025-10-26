@@ -19,7 +19,12 @@ import WeekChart from "@/components/WeekChart.vue";
   </header>
 
   <RouterView />
-  <WeekChart :chart-data="[10, 20, 30, 45, 50, 10, 50]" />
+  <WeekChart
+    :chart-data="{
+      labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      datasets: [{ label: 'Financial Program', data: [12, 19, 3, 5, 2, 3, 1] }],
+    }"
+  />
 </template>
 
 <style scoped>
