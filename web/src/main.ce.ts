@@ -1,3 +1,5 @@
+import "@/assets/main.css";
+
 import { defineCustomElement } from "vue";
 import WeekChart from "@/components/WeekChart.vue";
 
