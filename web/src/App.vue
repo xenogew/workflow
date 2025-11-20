@@ -1,92 +1,83 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from "vue-router";
-import HelloWorld from "@/components/HelloWorld.vue";
-import WeekChart from "@/components/WeekChart.vue";
+import {
+  FieldSet,
+  FieldGroup,
+  FieldLegend,
+  Field,
+  FieldLabel,
+  FieldDescription,
+  FieldSeparator,
+  FieldContent,
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { FieldButton } from "@/components/form";
+import { useForm } from "vee-validate";
+import { z } from "zod";
+import { toTypedSchema } from "@vee-validate/zod";
+
+const formSchema = toTypedSchema(
+  z.object({
+    name: z.string().min(2).max(100),
+    email: z.string().email(),
+    message: z.string().min(10).max(100),
+  }),
+);
+
+const form = useForm({
+  validationSchema: formSchema,
+});
+
+const handleSubmit = form.handleSubmit((values) => {
+  console.log(`form submitted: `, values);
+});
+
+defineProps<{
+  errors?: Array<{ message?: string } | undefined>;
+}>();
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+  <div class="@container">
+    <div class="w-full max-w-4xl">
+      <form @submit="handleSubmit">
+        <FieldSet>
+          <FieldLegend>Profile</FieldLegend>
+          <FieldDescription>Fill in your profile information.</FieldDescription>
+          <FieldSeparator />
+          <FieldGroup>
+            <Field orientation="responsive">
+              <FieldContent>
+                <FieldLabel for="name"> Name </FieldLabel>
+                <FieldDescription> Provide your full name for identification </FieldDescription>
+              </FieldContent>
+              <Input id="name" placeholder="Evil Rabbit" required />
+            </Field>
+            <FieldSeparator />
+            <Field orientation="responsive">
+              <FieldContent>
+                <FieldLabel for="lastName"> Message </FieldLabel>
+                <FieldDescription>
+                  You can write your message here. Keep it short, preferably under 100 characters.
+                </FieldDescription>
+              </FieldContent>
+              <Textarea
+                id="message"
+                placeholder="Hello, world!"
+                required
+                class="min-h-[100px] resize-none sm:min-w-[300px]"
+              />
+            </Field>
+            <FieldSeparator />
+            <Field orientation="responsive">
+              <FieldButton type="submit"> Submit </FieldButton>
+              <FieldButton type="button" variant="outline"> Cancel </FieldButton>
+            </Field>
+          </FieldGroup>
+        </FieldSet>
+      </form>
     </div>
-  </header>
-
-  <RouterView />
-  <WeekChart
-    :chart-data="{
-      labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-      datasets: [{ label: 'Financial Program', data: [12, 19, 3, 5, 2, 3, 1] }],
-    }"
-  />
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
-</style>
+<style scoped></style>
