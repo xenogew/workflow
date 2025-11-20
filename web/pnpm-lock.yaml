@@ -9,7 +9,7 @@ importers:
   .:
     dependencies:
       '@tailwindcss/vite':
-        specifier: ^4.1.16
+        specifier: ^4.1.17
         version: 4.1.17(vite@7.2.4(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2))
       '@vee-validate/zod':
         specifier: ^4.15.1
@@ -36,10 +36,10 @@ importers:
         specifier: ^2.6.0
         version: 2.6.0(typescript@5.9.3)(vue@3.5.24(typescript@5.9.3))
       tailwind-merge:
-        specifier: ^3.3.1
+        specifier: ^3.4.0
         version: 3.4.0
       tailwindcss:
-        specifier: ^4.1.16
+        specifier: ^4.1.17
         version: 4.1.17
       tw-animate-css:
         specifier: ^1.4.0
