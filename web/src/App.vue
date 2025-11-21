@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { FieldButton } from "@/components/form";
-import { useForm } from "vee-validate";
+import { useForm, Form, Field as vField } from "vee-validate";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -37,7 +37,7 @@ defineProps<{
 <template>
   <div class="@container">
     <div class="w-full max-w-4xl">
-      <form @submit="handleSubmit">
+      <form novalidate @submit.prevent="handleSubmit">
         <FieldSet>
           <FieldLegend>Profile</FieldLegend>
           <FieldDescription>Fill in your profile information.</FieldDescription>
