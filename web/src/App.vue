@@ -14,15 +14,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { FieldButton } from "@/components/form";
 import { useForm } from "vee-validate";
 import { z } from "zod";
-import { toTypedSchema } from "@vee-validate/zod";
 
-const formSchema = toTypedSchema(
-  z.object({
-    name: z.string().min(2).max(100),
-    email: z.email(),
-    message: z.string().min(10).max(100),
-  }),
-);
+const formSchema = z.object({
+  name: z.string().min(2).max(100),
+  email: z.email(),
+  message: z.string().min(10).max(100),
+});
 
 const form = useForm({
   validationSchema: formSchema,
