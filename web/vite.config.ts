@@ -3,6 +3,8 @@ import { resolve } from "node:path";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+import VueRouter from "unplugin-vue-router/vite";
+
 import vueDevTools from "vite-plugin-vue-devtools";
 
 // https://vite.dev/config/
@@ -11,6 +13,7 @@ export default defineConfig({
     "process.env": { NODE_ENV: JSON.stringify(process.env.NODE_ENV || "production") },
   },
   plugins: [
+    VueRouter(),
     vue({
       template: {
         compilerOptions: {
